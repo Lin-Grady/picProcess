@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telphone=no, email=no">
+        <meta name="renderer" content="webkit">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="screen-orientation" content="portrait">
+        <meta name="x5-orientation" content="portrait">
+        <title></title>
+        <style media="screen">
+                *{margin: 0; padding: 0}
+                img{display: block;}
+        </style>
+</head>
+
+<body>
+        <div class='upload'>
+                <input type="file" id='file'><label id="upload1"></label>
+
+                <p>原始圖片</p>
+                <img class="old" src="" alt="" width="80%">
+
+                <p>修改圖片</p>
+                <img class="new" src="" alt="">
+        </div>
+
+        <script src="./js/exif.js"></script>
+        <script src="./js/picProcess.js" charset="utf-8"></script>
+        <script type="text/javascript">
+                window.onload = function() {
+                        var dom = document.getElementById('file');
+                        dom.addEventListener('change', function(e) {
+                                picProcess.selectFileImage(e, '.new','.old')
+                        });
+                }
+        </script>
+</body>
+
+</html>
