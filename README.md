@@ -43,3 +43,6 @@ js文件夾裡面還有一個_picProcess.js是不需要的,那是我剛開始用
 var upload = new SelectFileImage(); 
 xx.addEventListener('change', function(e) { upload.start(e); });
 ```
+
+切記,每次選擇配置之後都必須重新實例化
+
