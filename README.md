@@ -30,6 +30,7 @@
 <script src="./js/exif.js"></script>
 <script src="./js/picProcess.js" charset="utf-8"></script>
 ```
+js文件夾裡面還有一個_picProcess.js是不需要的,那是我剛開始用的對象方法來寫,picProcess.js是用構造函數封裝的,兩者都能用,只是調用方法不同
 
 
 
