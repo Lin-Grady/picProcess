@@ -1,15 +1,17 @@
 var picProcess = {
         /**
          * [description]
-         * @param  {[type]} e        [上傳對象]
-         * @param  {[type]} selector [選擇器]
-         * @return {[type]}          [description]
+         * @param  {[type]} e          [description]
+         * @param  {[type]} nSelector  [原始圖片選擇器]
+         * @param  {[type]} oSselector [修改圖片選擇器]
+         * @return {[type]}            [description]
          */
-        selectFileImage: function(e, selector, selector2) {
+        selectFileImage: function(e, nSelector, oSselector) {
                 var file = e.target.files[0],
-                        //旋轉角度
+                        //拍攝方向
                         orientation = null,
                         fReader = new FileReader();
+                console.log('file:', file);
 
                 //限制大小格式
                 if (!picProcess.filtration(file)) {
@@ -20,7 +22,6 @@ var picProcess = {
                 EXIF.getData(file, function() {
                         orientation = EXIF.getTag(this, 'Orientation');
                         console.log('旋转角度: ', orientation);
-                        // alert(orientation);
                 });
 
                 //轉碼完成
@@ -28,11 +29,11 @@ var picProcess = {
                         //加載圖片
                         var img = new Image();
                         img.src = e.target.result;
-                        picProcess.preview(selector2, e.target.result)
+                        picProcess.preview(oSselector, e.target.result)
                         img.onload = function() {
                                 // console.log('data: URL格式: ', this);
-                                var url = picProcess.changeDataURI.call(this, orientation);
-                                picProcess.preview(selector, url)
+                                var url = picProcess.changeDataURI.call(this, file.type, orientation);
+                                picProcess.preview(nSelector, url)
                         }
                 }
 
@@ -62,23 +63,42 @@ var picProcess = {
 
         /**
          * [轉base64格式]
-         * @param  {[type]} orientation [旋轉角度]
+         * @param  {[type]} orientation [圖片類型]
+         * @param  {[type]} orientation [拍攝方向]
          * @return {[type]}             [DataURI]
          */
-        changeDataURI: function(orientation) {
+        changeDataURI: function(type, orientation) {
                 var canvas = document.createElement('canvas'),
                         ctx = canvas.getContext('2d'),
-                        nSize = picProcess.resetSize(this, 300, 300, 1, 600);
+                        nSize = picProcess.resetSize(this, 600, 400);
 
-                canvas.width = nSize.width;
-                canvas.height = nSize.height;
-                ctx.drawImage(this, 0, 0, nSize.width, nSize.height);
-
-                if (orientation && orientation != 1) {
-                        rotateImg(this, canvas, orientation);
+                switch (+ orientation) {
+                        case 3:
+                                canvas.width = nSize.width;
+                                canvas.height = nSize.height;
+                                ctx.rotate(180 * Math.PI / 180);
+                                ctx.drawImage(this, -nSize.width, -nSize.height, nSize.width, nSize.height);
+                                break;
+                        case 6:
+                                canvas.width = nSize.height;
+                                canvas.height = nSize.width;
+                                ctx.rotate(90 * Math.PI / 180);
+                                ctx.drawImage(this, 0, -nSize.height, nSize.width, nSize.height);
+                                break;
+                        case 8:
+                                canvas.width = nSize.height;
+                                canvas.height = nSize.width;
+                                ctx.rotate(270 * Math.PI / 180);
+                                ctx.drawImage(this, -nSize.width, 0, nSize.width, nSize.height);
+                                break;
+                        default:
+                                canvas.width = nSize.width;
+                                canvas.height = nSize.height;
+                                ctx.drawImage(this, 0, 0, nSize.width, nSize.height);
+                                break;
                 }
-                console.log(canvas);
-                return canvas.toDataURL('image/jpeg', 0.8);
+                //图片展示的 data URI
+                return canvas.toDataURL(type, 0.8);
         },
 
         /**
@@ -91,10 +111,9 @@ var picProcess = {
          * @return {[type]}        [寬高]
          */
         resetSize: function(img, width, height, ratio, max) {
+                //前提是，必须在图片完全下载到客户端浏览器才能判断，
                 var w = img.naturalWidth,
                         h = img.naturalHeight,
-                        regRatio = /^\d+:\d+$/gi,
-                        regMax = /^\d+$/gi,
                         width = width || w,
                         height = height || h;
 
@@ -119,30 +138,6 @@ var picProcess = {
                 }
                 console.log('重設寬高: ', w, h);
                 return {width: w, height: h}
-        },
-
-        /**
-         * [旋轉角度]
-         * @param  {[type]} img    []
-         * @param  {[type]} canvas []
-         * @param  {[type]} rotate [旋轉角度]
-         * @return {[type]}        [description]
-         */
-        rotateImg: function(img, canvas, rotate) {
-                var degree = rotate * Math.PI / 180,
-                        ctx = canvas.getContext('2d');
-
-                switch (+ rotate) {
-                        case 3:
-                                ctx.drawImage(img, img.width, -img.height);
-                                break;
-                        case 6:
-                                ctx.drawImage(img, img.height, -img.width);
-                                break;
-                        case 8:
-                                ctx.drawImage(img, -img.height, img.height);
-                                break;
-                }
         },
 
         /**

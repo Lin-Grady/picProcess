@@ -13,14 +13,37 @@
         <meta name="x5-orientation" content="portrait">
         <title></title>
         <style media="screen">
-                *{margin: 0; padding: 0}
-                img{display: block;}
+                * {
+                        margin: 0;
+                        padding: 0
+                }
+
+                img {
+                        display: block;
+                }
         </style>
 </head>
 
 <body>
         <div class='upload'>
-                <input type="file" id='file' capture="camera" accept="image/*"><label id="upload1"></label>
+                <!-- <input type="file" id='file' capture="camera" accept="image/*"><label id="upload1"></label> -->
+                <input type="text" id='width' placeholder='width'>
+                <input type="text" id='height' placeholder='height'>
+                <input type="text" id='ratio' placeholder='ratio'>
+                <input type="text" id='max' placeholder='max'>
+                <select id="rotate">
+                        <option value="">自讀取圖片</option>
+                        <option value="1">0°</option>
+                        <option value="6">90°</option>
+                        <option value="3">180°</option>
+                        <option value="8">270°</option>
+                </select>
+                <button type="button" id="btn">實例化插件</button>
+                <br>
+                <br>
+                <input type="file" id='file'><label id="upload1"></label>
+                <br>
+                <br>
 
                 <p>原始圖片</p>
                 <img class="old" width="300">
@@ -30,12 +53,31 @@
         </div>
 
         <script src="./js/exif.js"></script>
-        <script src="./js/picProcess.js" charset="utf-8"></script>
+        <script src="./js/imgProcess.js" charset="utf-8"></script>
         <script type="text/javascript">
                 window.onload = function() {
-                        var dom = document.getElementById('file');
+                        var dom = document.getElementById('file'),
+                                btn = document.getElementById('btn'),
+                                width = document.getElementById('width'),
+                                height = document.getElementById('height'),
+                                ratio = document.getElementById('ratio'),
+                                max = document.getElementById('max'),
+                                rotate = document.getElementById('rotate'),
+                                upload;
+
+                        btn.onclick=function(){
+                                upload = new SelectFileImage({
+                                        nSelector: '.new',
+                                        oSselector: '.old',
+                                        width: width.value,
+                                        height: height.value,
+                                        ratio: ratio.value,
+                                        max: max.value,
+                                        orientation: rotate.value,
+                                })
+                        }
                         dom.addEventListener('change', function(e) {
-                                picProcess.selectFileImage(e, '.new','.old')
+                                upload.start(e);
                         });
                 }
         </script>
