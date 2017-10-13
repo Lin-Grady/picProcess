@@ -26,7 +26,6 @@
 
 <body>
         <div class='upload'>
-                <!-- <input type="file" id='file' capture="camera" accept="image/*"><label id="upload1"></label> -->
                 <input type="text" id='width' placeholder='width'>
                 <input type="text" id='height' placeholder='height'>
                 <input type="text" id='ratio' placeholder='ratio'>
@@ -41,6 +40,7 @@
                 <button type="button" id="btn">實例化插件</button>
                 <br>
                 <br>
+                <!-- <input type="file" id='file' capture="camera" accept="image/*"><label id="upload1"></label> -->
                 <input type="file" id='file'><label id="upload1"></label>
                 <br>
                 <br>
@@ -53,7 +53,7 @@
         </div>
 
         <script src="./js/exif.js"></script>
-        <script src="./js/imgProcess.js" charset="utf-8"></script>
+        <script src="./js/picProcess.js" charset="utf-8"></script>
         <script type="text/javascript">
                 window.onload = function() {
                         var dom = document.getElementById('file'),
