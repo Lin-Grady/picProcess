@@ -38,3 +38,4 @@ picProcess
 -	orientation: 圖片旋拍攝方向,(配合exif.js,1: 0°; 3: 180°; 6: 90°; 8: 270°; )\`\``javascript var upload = new SelectFileImage(); xx.addEventListener('change', function(e) { upload.start(e); });
 
 \`\`\`
+切記,每次選擇完配置之後都要重新實例化插件
