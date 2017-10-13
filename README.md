@@ -21,10 +21,12 @@ picProcess
 快速上手
 --------
 
-在页面中加载脚本：`javascript
+在页面中加载脚本：
+```javascript
 <script src="./js/exif.js"></script>
 <script src="./js/picProcess.js" charset="utf-8"></script>
-` js文件夾裡面還有一個_picProcess.js是不需要的,那是我剛開始用的對象方法來寫,picProcess.js是用構造函數封裝的,兩者都能用,只是調用方法不同
+```
+js文件夾裡面還有一個_picProcess.js是不需要的,那是我剛開始用的對象方法來寫,picProcess.js是用構造函數封裝的,兩者都能用,只是調用方法不同
 
 初始化时可以传入配置：
 ----------------------
@@ -37,8 +39,7 @@ picProcess
 -	max: 圖片最大值範圍
 -	orientation: 圖片旋拍攝方向,(配合exif.js,1: 0°; 3: 180°; 6: 90°; 8: 270°; )
 
-`javascript
-javascript var upload = new SelectFileImage(); xx.addEventListener('change', function(e) { upload.start(e); });
-` 
-
-切記,每次選擇完配置之後都要重新實例化插件
+```javascript
+var upload = new SelectFileImage(); 
+xx.addEventListener('change', function(e) { upload.start(e); });
+```
