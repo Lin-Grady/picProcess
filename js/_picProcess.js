@@ -1,10 +1,10 @@
 export var picProcess = {
         /**
          * [description]
-         * @param  {[type]} e          [description]
-         * @param  {[type]} nSelector  [原始圖片選擇器]
-         * @param  {[type]} oSselector [修改圖片選擇器]
-         * @return {[type]}            [description]
+         * @param  {[type]}   e        []
+         * @param  {[type]}   settings [自定义项]
+         * @param  {Function} callback [回调函数]
+         * @return {[type]}            [自动判断是否需要压缩]
          */
         selectFileImage: function(e, settings, callback) {
                 var fReader = new FileReader(),
