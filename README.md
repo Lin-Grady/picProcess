@@ -26,7 +26,7 @@ picProcess
 <script src="./js/exif.js"></script>
 <script src="./js/picProcess.js" charset="utf-8"></script>
 ```
-js文件夾裡面還有一個_picProcess.js是不需要的,那是我剛開始用的對象方法來寫,picProcess.js是用構造函數封裝的,兩者都能用,只是調用方法不同
+
 
 初始化时可以传入配置：
 ----------------------
@@ -46,3 +46,17 @@ xx.addEventListener('change', function(e) { upload.start(e); });
 
 切記,每次選擇配置之後都必須重新實例化
 
+
+
+_picProcess.js快速上手
+--------
+js文件夾裡面還有一個_picProcess.js是不需要的,那是我剛開始用的對象方法來寫,picProcess.js是用構造函數封裝的,兩者都能用,只是調用方法不同,而且这里移除了检测旋转功能,新增自动判断是否压缩,按比例缩小
+
+初始化时默认配置：
+----------------------
+minSize: 40 * 1024,
+maxSize: 10 * 1024 * 1024,
+reg: /image\/\w+/,
+width: 600,
+maxLen: null, //最大长度范围,会覆盖设定高宽
+encoderOptions: 0.8 //压缩质量
